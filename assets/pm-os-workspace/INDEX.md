@@ -1,64 +1,47 @@
-﻿# {{PROJECT_NAME}} - PM OS Index
+# {{PROJECT_NAME}} — PM OS
 
-> This is the map of the workspace. Read this **first**, every time, before touching anything else.
-> It tells an agent which folder matters, which file to open, and which files to skip - so it
-> moves through the workspace like someone who has been here before, instead of wandering.
+> **Your living product workboard:** Start here to see what matters now and where the durable work
+> lives. Tell the Chief PM what changed; the agent keeps this page current with you.
 
-## How to use this index
+## Now
 
-- **Start here.** For any request, scan this index, then open only the file(s) that matter.
-- **Don't read everything.** The point of the index is to *avoid* loading the whole workspace into context.
-- **Keep it current.** Whenever you create, move, rename, or meaningfully edit a PM OS artifact,
-  update the nearest `INDEX.md` and, if it's a new top-level area, this root index. A stale map is
-  worse than no map.
+- _No active items yet. Add the first priority or ask the Chief PM to organize your current work._
 
-## Who to talk to
+## Active product work
 
-You only talk to one agent: the **Chief PM** ([agents/pm-chief.md](agents/pm-chief.md)).
-It reads your request and delegates to the right sub-agent. See [agents/INDEX.md](agents/INDEX.md).
+- [Product vision](product-docs/product-vision.md) — product, users, problem, stage, goals, bets, and constraints.
+- [Projects](product-docs/projects/INDEX.md) — the portfolio: each initiative with its stage, health, and next milestone.
+- [Outcomes](product-docs/outcomes/INDEX.md) — recommendations, prioritization, MVP cuts, and next steps.
 
-Working agents should also read [AGENTS.md](AGENTS.md) - the operating guide for this workspace.
-[CLAUDE.md](CLAUDE.md) is a compatibility pointer to the same guide for tools that expect that name.
-Setting it up for the first time? See [_workspace_setup_docs/personalization/README.md](_workspace_setup_docs/personalization/README.md).
-New here? See [START_HERE.md](START_HERE.md) for the plain-language user guide.
+## Waiting on
 
-## Map
+- _Nothing recorded yet._
 
-| Folder | What lives here | Open when |
-|---|---|---|
-| [agents/](agents/INDEX.md) | The Chief PM and its sub-agents (who does what) | Deciding who should handle a request |
-| [_workspace_setup_docs/](_workspace_setup_docs/INDEX.md) | Workspace setup rules, structural playbooks, and one-time personalization docs | A change affects the PM OS structure itself |
-| [product-skills/](product-skills/INDEX.md) | Repeatable product judgment - how this PM wants work done | An agent needs the "how" for a product task |
-| [product-practices/](product-practices/INDEX.md) | Templates, examples, and style references that shape product skills | A skill needs a reusable format or example |
-| [product-docs/](product-docs/INDEX.md) | The actual work: vision, meetings, outcomes, PRDs, decisions, design, data, roadmaps, comms | Looking for or producing real artifacts |
+## Recent decisions and outcomes
 
-## Tool config
+- [Decisions](product-docs/decisions/INDEX.md)
+- [Outcomes](product-docs/outcomes/INDEX.md)
 
-| Folder | What lives here | Open when |
-|---|---|---|
-| [.cursor/rules/](.cursor/rules/pm-os.mdc) | Cursor project rule that points back to AGENTS.md | Cursor needs persistent workspace guidance |
+## Browse the workspace
 
-## Quick links
+- [Product workspace](product-docs/INDEX.md) — actual product context and work.
+- [Meetings](product-docs/meetings/INDEX.md) — product-wide summaries and preserved source notes.
+- [Product practices](product-practices/INDEX.md) — reusable skills, templates, and references.
+- [START_HERE.md](START_HERE.md) — short orientation for a new PM or collaborator.
 
-- **Product vision** -> [product-docs/product-vision.md](product-docs/product-vision.md)
-- **Skills guide** -> [product-skills/START_HERE.md](product-skills/START_HERE.md)
-- **Skill templates** -> [product-practices/templates/INDEX.md](product-practices/templates/INDEX.md)
-- **Skill references** -> [product-practices/references/INDEX.md](product-practices/references/INDEX.md)
-- **Meetings** (summaries + raw source archives) -> [product-docs/meetings/INDEX.md](product-docs/meetings/INDEX.md)
-- **Outcomes** (insights, recommendations, prioritization) -> [product-docs/outcomes/INDEX.md](product-docs/outcomes/INDEX.md)
-- **PRDs** -> [product-docs/prds/INDEX.md](product-docs/prds/INDEX.md)
-- **Decisions log** -> [product-docs/decisions/INDEX.md](product-docs/decisions/INDEX.md)
-- **Design** -> [product-docs/design/INDEX.md](product-docs/design/INDEX.md)
-- **Data insights** -> [product-docs/data-insights/INDEX.md](product-docs/data-insights/INDEX.md)
-- **Roadmaps** -> [product-docs/roadmaps/INDEX.md](product-docs/roadmaps/INDEX.md)
-- **Stakeholder comms** -> [product-docs/stakeholder-comms/INDEX.md](product-docs/stakeholder-comms/INDEX.md)
-- **Cursor rule** -> [.cursor/rules/pm-os.mdc](.cursor/rules/pm-os.mdc)
+## Ask the Chief PM
 
-## The one rule that makes this work
+Talk naturally to the [Chief PM](agents/pm-chief.md). It coordinates workspace practices and any
+compatible installed capabilities. Narrative work stays Markdown-first unless you request another
+format. If [_workspace_setup_docs/personalization/](_workspace_setup_docs/personalization/INDEX.md)
+still exists, say: “Customize my workspace.”
 
-When you produce a new artifact, **give it coordinates**: put it in the right folder (create a
-subfolder if it deserves one), name it in `lower-kebab-case.md` (no spaces, no capitals), and add a
-line to the nearest `INDEX.md`. If product direction changes, update
-[product-docs/product-vision.md](product-docs/product-vision.md). Capture is not memory. Connection is.
+## Workspace machinery
 
-See [_workspace_setup_docs/skills/apply-pmos-struct.md](_workspace_setup_docs/skills/apply-pmos-struct.md) for the full naming and structure rules.
+You normally do not need to edit these files: [AGENTS.md](AGENTS.md), [agents/](agents/INDEX.md),
+[_workspace_setup_docs/](_workspace_setup_docs/INDEX.md), [CLAUDE.md](CLAUDE.md), and
+[the Cursor rule](.cursor/rules/pm-os.mdc).
+
+Agents: keep **Now**, **Waiting on**, and **Recent decisions and outcomes** concise and useful to the
+PM. Update the nearest domain index for detailed navigation. Do not turn this page into an exhaustive
+file inventory.

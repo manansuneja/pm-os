@@ -1,8 +1,10 @@
 # Document Product Context
 
+> **For you and your agents:** Reusable documentation workflow managed through the Chief PM.
+
 Use this when product knowledge should become durable memory instead of staying buried in chat.
 
-Follow the operating-layer vs product-layer rule in [AGENTS.md](../AGENTS.md). Product docs describe
+Follow the operating-layer vs product-layer rule in [AGENTS.md](../../AGENTS.md). Product docs describe
 the user's actual product or project; workspace agents and skills are only the machinery maintaining
 the workspace.
 
@@ -13,8 +15,8 @@ Update documentation when the work changes or clarifies:
 - Product vision, audience, problem, goal, positioning, strategy, or success measures.
 - A decision and its reasoning.
 - An insight, prioritization, recommendation, MVP cut, or synthesis that future agents will need.
-- Design considerations, data insights, roadmap plans, or stakeholder communications that should be
-  findable later.
+- Profile-driven work such as research, design, data, roadmaps, launches, or stakeholder
+  communications that should be findable later.
 - A PRD, meeting summary, or other artifact that future agents will need to find.
 - A new recurring workflow, sub-agent, skill, or convention.
 
@@ -22,23 +24,21 @@ Do not file every tangent. Capture durable context, not noise.
 
 ## Templates and references
 
-Before creating a durable artifact, check [product-practices/templates/](../product-practices/templates/INDEX.md) for the matching template
-and [product-practices/references/](../product-practices/references/INDEX.md) for PM-provided examples. In particular,
-[product-practices/templates/decision.md](../product-practices/templates/decision.md) is the default structure for decision records.
+Before creating a durable artifact, check [product-practices/templates/](../templates/INDEX.md) for the matching template
+and [product-practices/references/](../references/INDEX.md) for PM-provided examples. In particular,
+[product-practices/templates/decision.md](../templates/decision.md) is the default structure for decision records.
 
 ## Where it goes
 
 | Context | File or folder |
 |---|---|
 | Product purpose, audience, goal, positioning | `product-docs/product-vision.md` |
-| Meeting output | `product-docs/meetings/<MMM-DD-YYYY>-<short-title>/summary.md` |
-| Product insight, recommendation, prioritization, MVP cut | `product-docs/outcomes/<MMM-DD-YYYY>-<topic>.md` |
-| Committed decision | `product-docs/decisions/<MMM-DD-YYYY>-<decision-slug>.md` |
-| Feature/spec work | `product-docs/prds/<area-or-mvp-slug>/<feature-slug>/prd.md` or `product-docs/prds/<feature-slug>/prd.md` |
-| Design consideration or UX note | `product-docs/design/<MMM-DD-YYYY>-<topic>.md` |
-| Metric read, experiment result, or quantitative insight | `product-docs/data-insights/<MMM-DD-YYYY>-<topic>.md` |
-| Roadmap, release plan, or sequencing note | `product-docs/roadmaps/<MMM-DD-YYYY>-<topic>.md` |
-| Stakeholder update, brief, launch note, or client summary | `product-docs/stakeholder-comms/<MMM-DD-YYYY>-<topic>.md` |
+| Initiative: brief, status, requirements, build brief | `product-docs/projects/<project-slug>/` |
+| Product-wide meeting output | `product-docs/meetings/<MMM-DD-YYYY>-<short-title>/summary.md` |
+| Product-wide insight, recommendation, prioritization | `product-docs/outcomes/<MMM-DD-YYYY>-<topic>.md` |
+| Committed decision | `product-docs/decisions/<MMM-DD-YYYY>-<decision-slug>.md`, or the project's `decisions/`, plus a row in the global decisions log |
+| Meeting, outcome, or decision about one project | Inside that project's `meetings/`, `outcomes/`, or `decisions/` folder |
+| Profile-driven artifact | The customized product area and structure defined by its skill/template |
 | New operating convention | `AGENTS.md`, a skill file, or an agent file |
 
 ## Rules

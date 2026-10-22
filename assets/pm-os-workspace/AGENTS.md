@@ -1,133 +1,183 @@
-# AGENTS.md - {{PROJECT_NAME}} workspace
+# AGENTS.md — {{PROJECT_NAME}} PM Workspace
 
-Operating guide for any AI agent working in this workspace. Read this, then [INDEX.md](INDEX.md).
-This is a PM operating system: a workspace with memory, where context compounds over time.
+> **Agent-facing:** This is the operating guide for AI agents. The PM should work mainly in
+> `product-docs/` and ask the Chief PM to change workspace machinery.
 
-## First: is this workspace personalized yet?
+Read this file, then [INDEX.md](INDEX.md). This is a PM operating system with durable product memory
+and a small, human-first working surface. Treat `INDEX.md` as the PM's living dashboard as well as
+shared navigation; keep agent operating rules here instead of turning the index into machinery.
 
-**If the `_workspace_setup_docs/personalization/` folder still exists, this workspace has not been personalized.** It is still the
-generic scaffold. Before doing substantial PM work, offer to run setup:
+Read `_workspace_setup_docs/workspace-state.json` when deciding whether an installed setup update
+requires a workspace migration. Never infer that a newer skill version authorizes structural edits.
+
+## Personalization state
+
+If `_workspace_setup_docs/personalization/` exists, the scaffold is still generic. Before
+substantial product work, offer:
 
 > Customize my workspace.
 
-When the user asks to customize the workspace, read `_workspace_setup_docs/personalization/AGENTS.md` and run that intake - product
-context, Chief PM style, key preferences. When the intake has enough context and the personalization
-edits are applied:
+When asked, follow `_workspace_setup_docs/personalization/AGENTS.md`. Personalization must reconcile
+the structure—keep, add, remove, and ask—not merely add more folders. It may remove clearly
+irrelevant generated-empty folders. It must ask once before deleting or relocating user-authored
+content.
 
-1. Apply the answers across `AGENTS.md`, `product-docs/product-vision.md`, `agents/pm-chief.md`, and any
-   skills the user gave preferences for (full steps in `_workspace_setup_docs/personalization/AGENTS.md`).
-2. Check the core context is answered: workspace name, product/users, problem/opportunity, stage or
-   near-term goal, and any existing files or examples the PM wanted used.
-3. Delete the entire `_workspace_setup_docs/personalization/` folder as the final cleanup step. Keep everything else, including
-   this workspace's `START_HERE.md` (the user's guide).
+After applying and validating the answers, delete `_workspace_setup_docs/personalization/`. Then
+rename the root directory itself to match the workspace name as the final filesystem operation. Do
+this by default unless the PM asked to keep the current name, the destination exists, or the root
+contains unrelated material. Never create a new root and move the contents into it. Report the old
+and new paths and note that the editor may need to reopen the folder.
 
-The presence of `_workspace_setup_docs/personalization/` is the "not personalized yet" flag; its absence means setup is done - do not
-recreate it. If the user wants to start work immediately, you may proceed, but personalize at the first
-natural opportunity so the Chief PM and product docs stop sounding generic.
+The absence of the personalization folder means setup is complete. Do not recreate it.
 
-## Workspace guide vs agent profiles
+## One front door
 
-This file is the workspace operating guide. It is not a duplicate agent profile.
+For normal work, act through the **Chief PM**: [agents/pm-chief.md](agents/pm-chief.md). It coordinates
+requests and applies specialists and product skills as needed. The PM normally just talks in the
+workspace.
 
-For PM work, enter through the **Chief PM**: [agents/pm-chief.md](agents/pm-chief.md). The Chief PM
-coordinates the work and delegates to specialists. In Claude Code, Cursor, and Codex the PM usually
-just talks in the workspace and this guide points the chat to the Chief. In GitHub Copilot they can
-also select the Chief or a specialist from the agent picker.
+## PM profile
 
-## Updating the installed PM OS skill
+**Profile:** `pm` _(default. Personalization asks how the PM works and updates this line.)_
 
-If the PM asks how to update the installed `pm-os-setup` skill after new changes land in GitHub, give
-them this command:
+- `pm` — defines the product and hands build work to an engineering team. The
+  [Builder](agents/sub-agents/builder.md) stops at a build brief people can act on.
+- `pm-builder` — also builds prototypes or features with coding agents. The Builder additionally
+  writes coding-agent task prompts, scopes prototypes, checks results against acceptance criteria,
+  and keeps ship notes.
 
-```bash
-npx skills@latest update pm-os-setup -g
-```
+Application code never lives in this workspace. Link the code repository from the project's
+`brief.md`; the workspace holds the product thinking and the briefs that drive the build.
 
-This updates the globally installed skill. Do not run it silently unless the PM explicitly asks you
-to update the installed skill.
+## Think and Build
 
-## Operating layer vs product layer
+Work moves between two modes. The PM does not pick one; the Chief reads the project's stage in
+`status.md`.
 
-This is the global boundary rule for the workspace. Individual agents and skills may add a short
-reminder, but this section is the source of truth.
+- **Think** (discover, define): evidence, options, decisions, and requirements.
+- **Build** (build, launch, learn): build briefs, handoff, verification, status, and what was learned.
 
-Keep these separate:
+## Automatic structural reconciliation
 
-- **Workspace setup layer:** this PM OS itself - `AGENTS.md`, `agents/`, `_workspace_setup_docs/`,
-  indexes, and structure automation. The Chief PM, specialists, and protected setup playbooks live
-  here.
-- **Product practice layer:** user-shaped PM preferences in `product-skills/` and
-  `product-practices/`. This is where PRD style, templates, examples, and reusable PM judgment
-  evolve.
-- **Product docs layer:** the actual product or project the PM is building - `product-docs/`, PRDs,
-  decisions, meetings, customer context, roadmap, design, data, stakeholder communication, and
-  strategy.
+Whenever this file is read at the start of a session, perform a lightweight structure check before
+substantial work:
 
-Do not let operating-layer concepts leak into product artifacts. A PRD, product vision, or decision
-should not treat the Chief PM, PM OS, or workspace sub-agents as the user's product unless the PM
-explicitly says they are building a PM OS. If the product includes AI agents, robots, copilots, or
-automation, define those as product-specific actors from the product context, not from this workspace
-agent system.
+1. Compare the actual folder/file tree with the nearest `INDEX.md` maps. Scan paths and index
+   presence; do not load every file's contents.
+2. Check `product-docs/` (including each project folder), `product-practices/`, and immediate root
+   entries for user-created folders, subfolders, or files missing from indexes. Skip `raw/`, hidden/tool folders, agent-facing
+   machinery, dependency/build folders, and archives unless the task needs them.
+3. Treat manually added content as intentional. Preserve it, infer purpose from its name and nearby
+   material, then update the nearest useful index. Create a local `INDEX.md` only when the folder is
+   a meaningful content domain, a substantial subdomain, or a multi-file artifact that benefits from
+   its own workboard/map. Represent tiny leaf folders in their parent index.
+4. Connect a recurring area to product vision, Chief PM routing, a skill, template, tracker, or
+   specialist only when useful. Do not invent machinery for one-off content.
+5. Integrate clear cases without asking. Ask one concise question only when meaning or placement is
+   genuinely ambiguous or a move could break references. Never delete user-created content during
+   reconciliation.
+
+Briefly mention anything integrated in the task handoff. The PM should not have to maintain indexes
+or announce that they created a folder.
+
+## Keep the layers separate
+
+- **Workspace machinery:** `AGENTS.md`, `agents/`, `_workspace_setup_docs/`, indexes, and tool config.
+- **Reusable product practices:** `product-practices/skills/`, `product-practices/templates/`, and
+  `product-practices/references/`.
+- **Product work:** `product-docs/`—the actual product vision, evidence, decisions, requirements, and
+  current artifacts. Active work lives in `product-docs/projects/<project>/`; product-wide knowledge
+  stays in the global folders.
+
+Do not describe the Chief PM, agents, or PM OS as the user's product unless that is explicitly what
+they are building. Decide whether new material is current product work or a reusable way of doing
+future product work, then place it in `product-docs/` or `product-practices/` accordingly.
+
+## Capability routing and output formats
+
+- Treat PM OS as the organizer. When a compatible installed skill or tool can materially improve a
+  specialized task, use it without hard-coding a plugin brand or requiring it as a dependency.
+- Inspect only capabilities the host exposes. Never claim, install, connect, or authenticate a
+  capability that is unavailable; fall back to the best local Markdown workflow.
+- Default PRDs, briefs, decisions, research syntheses, plans, and other narrative artifacts to `.md`.
+  “Create a PRD” means Markdown unless the PM asks for Word, PDF, slides, or another format.
+- Use a heavier or binary format only when explicitly requested or clearly required by the context.
+  Ask one concise format question only when the choice would materially affect usability.
+- Store generated deliverables with their Markdown source or supporting context in the appropriate
+  product area. Preserve raw input and update the nearest useful index.
+- Ask before external writes such as creating issues, publishing, sending, or changing a connected
+  system. Reading an already available source should still stay within the user's requested scope.
 
 ## Always do these
 
-- **Orient first.** Read [INDEX.md](INDEX.md) - at the root and in every folder - to find which file
-  matters and which to skip. Don't load the whole workspace into context to find one thing.
-- **Route, don't solo.** Match the request to a specialist in
-  [agents/sub-agents/](agents/sub-agents/INDEX.md) and apply its skill, rather than doing everything
-  yourself in one voice.
-- **Act on capture.** When the PM provides raw notes, pasted text, loose files, screenshots, or
-  asks to summarize/import/process something, treat that as permission to organize it into the PM OS:
-  create the right folder, preserve raw input under a `raw/` archive subfolder, create the
-  summary/artifact in the main artifact folder, update indexes, and then report what changed. Do not
-  respond with a menu of options unless the request is genuinely ambiguous.
-- **Write durable work to files.** If the answer is substantial product work - analysis,
-  recommendations, prioritization, plans, PRD content, decisions, design considerations, data
-  insights, stakeholder communications, summaries, or reusable process - create or update the
-  appropriate artifact and index. Use chat for a brief handoff: what changed, the top takeaway, and
-  the file path.
-- **Ground in the vision.** [product-docs/product-vision.md](product-docs/product-vision.md) is the
-  source of truth for what {{PROJECT_NAME}} is and why. Tie work back to it.
-- **Keep the layers separate.** Use workspace agents and product skills to do the work; write product
-  docs about the user's actual product.
-- **Enforce structure.** Whatever gets produced follows the conventions below.
-- **Keep documentation alive.** If product context changes, update
-  [product-docs/product-vision.md](product-docs/product-vision.md) when the change is clear or when
-  the current vision is still generic. If another product doc should change and the source is clear,
-  update it; ask only when the change would overwrite an established direction or requires a product
-  judgment the notes do not answer.
-- **Let agents adapt.** The Chief and specialists should shape their behavior from the product
-  vision, recent product docs, and the nature of this project. When those change, update the relevant
-  agent or skill file instead of relying on memory.
+- **Orient first.** Read the root index and only relevant folder indexes/files.
+- **Ground the work.** Use [product-docs/product-vision.md](product-docs/product-vision.md) for the
+  product, users, problem, goals, stage, active bets, and constraints.
+- **Fit the product context.** Use the product stage, PM scope, users, surfaces, evidence, recurring
+  decisions, outputs, and natural vocabulary. Do not force every PM lane into every workspace.
+- **Route deliberately.** Match the request to a workspace specialist/practice and any compatible
+  installed capability when useful.
+- **Act on capture.** Organize provided notes/files, preserve raw input under an artifact-local
+  `raw/` folder, create the durable artifact separately, and update indexes.
+- **Save substantial work.** Put analysis, recommendations, decisions, PRDs, and plans in the right
+  product area; use chat for a short handoff with paths and takeaways.
+- **File by scope.** Work that belongs to one initiative goes inside its project; product-wide
+  work stays in the global folders. Every decision also gets a row in the global decisions log.
+- **Keep projects honest.** Stage and health live in each project's `status.md` and are mirrored in
+  the portfolio table. Update both in the same change.
+- **Keep structure focused.** Do not create a top-level area because it might be useful someday.
+- **Keep documentation alive.** Update product vision and related durable context when the source is
+  clear. Ask before overwriting established direction.
+- **Keep skills and routes synchronized.** Changes to a skill, specialist, or product area must
+  update linked files, indexes, and Chief PM routing in the same change.
+- **Recognize durable preferences.** On every request, determine from meaning and scope whether
+  guidance applies only to the current artifact or should govern future work. Strong evidence
+  includes organizational standards, broadly stated methods, canonical examples, recurring
+  workflows, and corrections intended to change the normal approach. Do not require special wording.
+- **Handle mixed intent.** When a request asks for immediate work and also establishes a durable
+  preference, complete the artifact and update the relevant existing skill/template/reference in
+  the same task. Ask one concise question only when persistence is genuinely ambiguous and would
+  materially affect future outputs.
+- **Let the workspace evolve.** Capture durable preferences and recurring workflows in the smallest
+  useful skill/template and optional specialist. Keep truly one-off work one-off.
+- **Keep audience labels.** Agent-only files must say so near the top. Content indexes are
+  human-first shared surfaces and should read like useful workboards, not agent manifests.
 
-## Conventions (full version: [_workspace_setup_docs/skills/apply-pmos-struct.md](_workspace_setup_docs/skills/apply-pmos-struct.md))
+## Structure rules
 
-- `lower-kebab-case` names, no spaces. Markdown for text; a table/JSON/sheet when it becomes data.
-- An `INDEX.md` in **every** PM OS content folder, kept current - every new artifact or meaningful
-  change updates the nearest index in the same change.
-- New artifact -> right folder (a subfolder if it earns one), good name, indexed.
-- New top-level area -> also update the root `INDEX.md`.
-- **Never overwrite raw input.** Raw notes stay raw under an artifact's `raw/` subfolder; summaries
-  and artifacts are new files in the main artifact folder.
-- Loose raw files under `product-docs/meetings/` are inbox items. Move them into a dated meeting
-  folder, preserve them under `raw/raw-notes.md`, write `summary.md`, and update the meetings index.
-  After archiving the raw source, remove the loose inbox copy. Do not leave duplicate raw files in
-  `product-docs/meetings/` or top-level `raw_notes.md` files in a meeting folder.
+Follow
+[_workspace_setup_docs/skills/apply-pmos-struct.md](_workspace_setup_docs/skills/apply-pmos-struct.md):
 
-## Structure
+- Use `lower-kebab-case`; use dates only for time-ordered artifacts.
+- Keep `INDEX.md` at the root and in meaningful content domains, substantial subdomains, and
+  multi-file artifacts. Tiny leaf folders can remain represented by the nearest parent index.
+- Update the nearest useful index after meaningful changes and the root index when active work,
+  important status, or top-level navigation changes.
+- Never overwrite raw input.
+- Remove stale links and orphaned routes when files or folders are removed.
 
+## Audience map
+
+```text
+START_HERE.md                    user welcome guide
+product-docs/                   primary PM + agent working surface
+  projects/                     one folder per initiative: brief, status, PRD, build brief
+product-practices/              shared customization center
+  skills/                       output/workflow instructions
+  templates/                    exact reusable formats
+  references/                   examples, sources, voice, and style
+INDEX.md                         shared map
+agents/                          agent-facing roles
+_workspace_setup_docs/          agent-facing setup and structure rules
+AGENTS.md, CLAUDE.md, .cursor/   agent/tool-facing wiring
 ```
-START_HERE.md       the human welcome guide: just talk to the agent
-agents/             Chief PM + sub-agents for meetings, outcomes, PRDs, design, data, roadmaps, comms, docs, skills
-_workspace_setup_docs/          setup docs, structure rules, and protected workspace playbooks
-product-skills/                 how product work gets done and how the PM's style is captured
-product-practices/templates/    reusable blank formats for product skills to follow
-product-practices/references/   PM-provided examples, style samples, and context references
-product-docs/       the work: vision, meetings, outcomes, decisions, PRDs, design, data, roadmaps, comms
+
+## Updating the installed setup skill
+
+If the PM asks how to update the globally installed `pm-os` skill, provide:
+
+```bash
+npx skills@latest update pm-os -g
 ```
 
-## Extending this OS
-
-Want to tailor it - your PRD format, meeting style, writing voice, extra sub-agents? See
-[_workspace_setup_docs/personalization/README.md](_workspace_setup_docs/personalization/README.md). (It's the one-time setup helper; the whole
-`_workspace_setup_docs/personalization/` folder is safe to delete once you're set up.)
+Do not run it silently unless the PM explicitly asks.

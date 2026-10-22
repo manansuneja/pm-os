@@ -1,178 +1,201 @@
 ---
-name: pm-os-setup
-description: Scaffold a Product Management operating system - a Markdown workspace with memory that compounds over time. Creates or fills a workspace root with a Chief PM coordinator agent, specialized sub-agents for meetings, outcomes, brainstorming, PRDs, design, data insights, roadmaps, stakeholder communication, documentation, and skills, product-skills for user-shaped PM workflows, product-practices for templates/references, protected _workspace_setup_docs for structure rules and onboarding, an INDEX.md map in every PM OS content folder, a product-docs tree (vision, meetings, outcomes, prds, decisions, design, data-insights, roadmaps, stakeholder-comms), plus START_HERE.md, AGENTS.md, CLAUDE.md, and a Cursor rule. Use when a PM or anyone wants to set up a PM OS, "PM operating system", PM workspace, agent workspace with memory, or asks to run pm-os-setup / PM-OS-Setup. After scaffolding, offers a "Customize my workspace" handoff so the user's own agent can personalize it. Not for building application code or generic unrelated file scaffolds.
+name: pm-os
+description: "Builds and personalizes a PM workspace that gives an agent lasting product context. It organizes vision, projects, meetings, decisions, outcomes, PRDs, and build briefs as indexed files; adds a Chief PM, specialists for project status and build handoff, and reusable product practices; serves PMs and PM-builders who work with coding agents; and grows with the product. Use when a PM asks for a PM OS, product workspace, product memory system, or invokes pm-os. Not for application code or unrelated scaffolding."
 ---
 
-# PM OS Setup
+# PM OS
 
 ## Overview
 
-This skill sets up a base **Product Management operating system**: a plain-Markdown workspace where
-context compounds instead of leaking. The PM talks to one **Chief PM** agent that delegates to
-specialized sub-agents, every PM OS content folder has an `INDEX.md` map, and conventions keep the workspace
-findable for both the human and future agents.
+Set up a **Product Management operating system**: a plain-Markdown workspace where product context
+compounds instead of disappearing into chat. The PM talks to one **Chief PM** that routes work to
+workspace practices and compatible installed capabilities. The root `INDEX.md` is a living,
+human-first dashboard; meaningful content areas use local indexes so durable decisions, evidence,
+requirements, and outcomes remain easy for people and future agents to find.
 
-The base is intentionally **generic**. This skill scaffolds it; the workspace's own
-`_workspace_setup_docs/personalization/` guide then drives the deeper, conversational
-personalization (real vision, the PM's PRD format, extra agents).
+The workspace is **hybrid**: active work lives in one folder per initiative under
+`product-docs/projects/`, each with a brief, a status log, requirements, and a build brief, while
+product-wide knowledge (vision, shared meetings, outcomes, and the decisions log) stays in global
+folders. It serves two kinds of PM: one who hands specs to an engineering team, and a **PM-builder**
+who also builds prototypes and features with coding agents. The PM profile in `AGENTS.md` records
+which; application code always stays in the PM's own repository.
 
-The durable root files are **the user's own** - don't put setup instructions in them:
-- `START_HERE.md` - the **human welcome guide** for how to start talking to the agent.
-- `AGENTS.md` - the **operating guide** agents auto-read for this workspace (front door, conventions).
-- `CLAUDE.md` - a tiny compatibility pointer to `AGENTS.md` for Claude Code and any tool that
-  expects that filename.
+Keep the operating machinery reusable, but fit the working surface to the product's stage, the PM's
+scope, current priorities, users, decision cadence, and recurring outputs. Personalization models
+the product lifecycle and PM responsibilities, then keeps what matters, adds what is missing, and
+removes generated clutter.
 
-Workspace setup material lives under **`_workspace_setup_docs/`**. The structure rules and
-skill-maintenance playbooks stay there; the **`_workspace_setup_docs/personalization/`** subfolder is
-transient and can be deleted once setup is complete.
+For tailored setup, read [references/product-profiles.md](references/product-profiles.md). Treat its
+profiles as suggestion pools, not folder bundles. Explicit requirements decide immediate scope;
+product and PM context provide vocabulary and high-confidence additions.
 
-## What gets created
+## What Gets Created
 
-A PM OS workspace root. Usually this is the current folder. If the user is in a broad/root directory,
-create a new `{projectName}-workspace/` folder there instead.
-
-```
+```text
 INDEX.md                         agents/pm-chief.md
 START_HERE.md                    agents/sub-agents/...
 AGENTS.md                        _workspace_setup_docs/skills/apply-pmos-struct.md
 CLAUDE.md                        _workspace_setup_docs/skills/manage-workspace-skills.md
-.cursor/rules/                   _workspace_setup_docs/personalization/...
-product-skills/START_HERE.md     product-skills/summarize-notes.md
-product-skills/brainstorm.md     product-skills/to-prd.md
-product-skills/data-insights.md  product-skills/roadmap-planning.md
-product-practices/templates/     product-practices/references/
-product-docs/product-vision.md   product-docs/meetings/ , outcomes/ , prds/ , decisions/
-product-docs/design/             product-docs/data-insights/ , roadmaps/ , stakeholder-comms/
+.cursor/rules/pm-os.mdc          _workspace_setup_docs/personalization/...
+product-practices/
+  skills/                        summarize-notes.md brainstorm.md ...
+  templates/                     meeting-summary.md outcome.md decision.md PRD templates ...
+  references/
+product-docs/
+  product-vision.md              meetings/ outcomes/ decisions/
+  projects/                      INDEX.md (portfolio) and <project>/ brief, status, prd, build-brief
 ```
 
-Plus an `INDEX.md` in every PM OS content folder and a tiny Cursor project rule.
+The root and each meaningful content domain get an `INDEX.md`. Tiny leaf folders can be represented
+by their nearest parent index instead of carrying duplicate maps.
 
-## Setup workflow
+## Operating Modes
 
-Follow these steps in order.
+- **Workspace mode:** When the agent has a user-selected writable workspace root, follow the full
+  setup workflow below and create the durable Markdown workspace.
+- **Conversation mode:** When the client has no writable workspace root, including many mobile or
+  web conversations, say so before setup. PM OS can still guide product work and maintain a compact
+  Markdown `PM OS Index` in the conversation, but it must not claim that it created a persistent
+  folder tree, a ChatGPT Project, or files that the client cannot actually access. Keep the index to
+  current work, waiting items, recent decisions, and links or names for artifacts created in the
+  conversation. Default artifacts to Markdown. Offer to provide supported downloadable Markdown
+  files or a starter pack, or to continue the full setup later in a file-capable environment.
 
-Think of this like starting a new Next.js or other dev project:
+Conversation mode is a useful working surface, not a silent substitute for the durable workspace.
+If a compatible installed capability can save an artifact to a destination the user already
+controls, use it only when requested or clearly appropriate and confirm the destination when it is
+ambiguous. Do not install, connect, or imply access to another capability automatically.
 
-- If the user already opened or created the project/workspace folder, set up the PM OS directly in
-  the current folder.
-- If the user is in a broad parent location and asks for a new workspace, create a clean
-  `<project-slug>-workspace/` folder there.
+## Setup Workflow
 
-1. **Ask two quick things** (one short message, don't over-interview - deeper questions come later
-   via the `_workspace_setup_docs/personalization/` guide):
-   - What's the product/project name? (Used to fill `{{PROJECT_NAME}}` and to name the workspace
-     folder if one needs to be created. If they skip it, use `pm-os-workspace` for a new folder and
-     leave placeholders.)
-   - Are we setting this up in the current folder, or should I create a new workspace folder here?
+1. **Ask one short intake.** Collect the product/project and workspace name, what is being built and
+   for whom, current product stage and near-term outcome, the PM's active responsibilities and
+   recurring work, existing context or preferences, and whether the current folder should become the
+   workspace (the default) or a new folder should be created.
 
-2. **Choose the workspace root.** Prefer the current directory when it looks intentionally chosen:
-   empty, nearly empty, or already named like the product/project. This is the best UX in Claude Code,
-   Cursor, and similar tools where the user opened a project folder first.
-
-   Create a new `<project-slug>-workspace/` folder only when the current directory looks broad or
-   unsafe to write into directly, such as a home folder, drive root, downloads folder, repo collection,
-   desktop, or a directory with many unrelated files. In that case, tell the user the exact folder
-   you will create before writing.
+2. **Choose the workspace root.** Default to the current directory and rename it in place later
+   rather than nesting a new folder inside it. A folder containing `.git/`, `README.md`, or a few
+   starter files can still be intentional. Create `<project-slug>-workspace/` only when the current
+   directory is genuinely broad or unsafe, such as a home folder, Downloads, Desktop, a repository
+   collection, or a folder with unrelated project material.
 
 3. **Guard against clobbering.** Never overwrite an existing workspace or unrelated project files.
-   If the chosen workspace root is non-empty, inspect only the top-level names and decide:
+   Treat `AGENTS.md`, `INDEX.md`, `agents/`, `_workspace_setup_docs/`, `product-practices/`, and
+   `product-docs/` as current markers. Also recognize legacy top-level `product-skills/`. If markers
+   exist, read `_workspace_setup_docs/workspace-state.json` when present and ask whether the user
+   wants an update or migration instead of scaffolding over them. A newer setup skill never silently
+   migrates an existing workspace. Schema-1 workspaces keep a flat `product-docs/prds/` and continue
+   to work; adopting `projects/` is an explicit, separate migration the PM asks for.
 
-   - If it already contains PM OS files (`AGENTS.md`, `INDEX.md`, `agents/`,
-     `_workspace_setup_docs/`, `product-skills/`, or `product-docs/`), stop and ask whether to update
-     the existing PM OS instead of scaffolding.
-   - If it is a normal project folder with a few existing files, explain the PM OS files that will be
-     added and ask before writing.
-   - If it is broad/root-like or cluttered, create `<project-slug>-workspace/` inside it instead.
+4. **Run the scaffold helper.** Prefer the bundled script over writing files manually.
 
-   The final workspace root must be the folder the user opens. It should contain `INDEX.md`,
-   `START_HERE.md`, `AGENTS.md`, `CLAUDE.md`, `.cursor/`, `_workspace_setup_docs/`, `agents/`,
-   `product-skills/`, `product-practices/`, and `product-docs/` directly.
-
-4. **Run the scaffold helper for the active OS/shell.** Prefer the bundled script over manually
-   writing files. This keeps Claude Code, Cursor, and other agents from spending minutes emitting
-   every Markdown file one by one.
-
-   Detect the active environment from the running agent and shell. On macOS/Linux in Bash, zsh, or
-   sh, use the shell helper:
+   macOS/Linux:
 
    ```bash
    "<skill-root>/scripts/scaffold-pm-os.sh" --project-name "<project name>" --target-path "." --use-current-folder
    "<skill-root>/scripts/scaffold-pm-os.sh" --project-name "<project name>" --target-path "." --create-folder
    ```
 
-   On Windows PowerShell, use the PowerShell helper:
+   Windows PowerShell:
 
    ```powershell
    & "<skill-root>\scripts\scaffold-pm-os.ps1" -ProjectName "<project name>" -TargetPath "." -UseCurrentFolder
    & "<skill-root>\scripts\scaffold-pm-os.ps1" -ProjectName "<project name>" -TargetPath "." -CreateFolder
    ```
 
-   Do not repeatedly try unavailable shells. Only call `pwsh` on macOS/Linux if the shell helper is
-   unavailable and `command -v pwsh` already succeeds. If no helper can run, use the manual copy
-   fallback below.
+   Do not repeatedly try unavailable shells. On macOS/Linux, call `pwsh` only when the shell helper
+   is unavailable and `command -v pwsh` succeeds.
 
-5. **Manual fallback only if the script is unavailable.** Recursively copy the contents of the
-   bundled `assets/pm-os-workspace/` directory into the chosen workspace root. Keep the structure and
-   filenames exactly.
+5. **Use a manual fallback only when scripts are unavailable.** Copy the contents of
+   `assets/pm-os-workspace/` into the chosen root, not the template folder itself. Fill
+   `{{PROJECT_NAME}}` and `{{DATE}}` outside `_workspace_setup_docs/personalization/`; keep tokens in
+   that one-time guide so it remains reusable.
 
-   Copy the template contents, not the template folder. Do not create any of these wrong bases:
-   - `<project-slug>-workspace/pm-os-workspace/...`
-   - `<project-slug>-workspace/pm-os-setup/...`
-   - `pm-os-setup-workspace/...`
+6. **Apply product-context tailoring.** Follow `references/product-profiles.md`. Model the users,
+   product surfaces, lifecycle/stage, active bets, evidence, decisions, recurring artifacts,
+   stakeholders, and things worth tracking. Turn that model into a focused mix of folders,
+   subfolders, trackers, templates, skills, and specialists. Begin with product vision, projects,
+   meetings, outcomes, decisions, and the small PM skill core—summarizing, brainstorming,
+   synthesizing outcomes, documenting product context, running projects, writing PRDs, and writing
+   build briefs. Add, adapt, or remove the rest in lockstep with actual scope. Less is more. Update indexes and Chief PM routing.
 
-6. **Fill placeholders** across the copied files - **except the `_workspace_setup_docs/personalization/` folder**, which
-   intentionally keeps the literal tokens so its guide stays usable later:
-   - `{{PROJECT_NAME}}` -> the name from step 1 (or leave as-is everywhere if they skipped it).
-   - `{{DATE}}` -> today's date in `MMM-DD-YYYY` (only appears in templates that need it).
+   Keep ordinary PM artifacts Markdown-first. A request such as “create a PRD” produces `.md` by
+   default. Use an available document, presentation, spreadsheet, design, research, or other
+   installed capability only when the user explicitly asks for that format/capability or the context
+   clearly requires it. If the format choice would materially change usability and intent remains
+   unclear, ask one concise question. Do not install or connect another capability automatically.
 
-   The scaffold helper already does this. Only do this manually when using the fallback path.
+7. **Show the result with a human-first map.** Point the user to:
 
-7. **Show the result.** Print the created tree and point the user to the orientation files:
-   - `INDEX.md` - the map (always read first).
-   - `START_HERE.md` - the user-facing welcome guide: just talk to the agent, paste notes, ask for
-     outcomes, PRDs, design, data, roadmaps, comms, or skill updates.
-   - `AGENTS.md` - the durable operating guide agents read to work in this workspace.
-   - `CLAUDE.md` - a compatibility pointer to `AGENTS.md`; keep it small.
-   - `_workspace_setup_docs/personalization/` - the one-time guide to personalize further (deletable once done).
+   - `START_HERE.md` — the human welcome guide.
+   - `product-docs/` — the primary product working surface, with `projects/` for active work.
+   - `product-practices/` — skills, templates, and references controlling how work is done.
+   - `INDEX.md` — the living workboard and high-level map.
+   - `_workspace_setup_docs/personalization/` — agent-managed one-time setup.
 
-8. **Offer the handoff.** Tell them the base is generic and ask if they'd like to personalize it now.
-   If yes, read the newly created `_workspace_setup_docs/personalization/AGENTS.md` in the workspace and follow its quick-start
-   + apply steps. If not, they can do it anytime by telling their agent: *"Customize my workspace."*
+   Explain that `agents/`, `_workspace_setup_docs/`, `AGENTS.md`, `CLAUDE.md`, and `.cursor/` are
+   agent-facing machinery. Tell the PM they can ask the agent to add a folder, subfolder, tracker,
+   workflow, output format, or specialist later. If they add one manually, the next agent should
+   integrate it automatically.
 
-## Conventions to preserve
+8. **Offer personalization.** If the user says yes, read
+   `_workspace_setup_docs/personalization/AGENTS.md`. Personalization must reconcile the structure,
+   not merely add to it. It may remove clearly irrelevant generated-empty folders, skills,
+   templates, specialists, and routes. It must ask once before deleting or relocating user-authored
+   content.
 
-When copying and (optionally) personalizing, keep what makes the system work - the canonical rules
-live in the workspace's `_workspace_setup_docs/skills/apply-pmos-struct.md`:
+9. **Handle root-folder renaming safely.** During personalization, rename the root folder to match
+   the workspace name by default. Perform one same-parent rename as the final filesystem operation
+   after all content edits and checks. Never create a destination root and move files into it. Skip
+   the rename and ask first only if the destination exists or the root contains unrelated material.
+   Report the old and new paths and note that the editor may need to reopen the folder.
 
-- One front door (talk to the Chief PM; it delegates).
-- An `INDEX.md` in every PM OS content folder, kept current - every artifact or meaningful change
-  updates the nearest index.
-- `lower-kebab-case` names, no spaces; Markdown for text, a table/JSON when work becomes data.
-- Synthesis, recommendations, prioritization, MVP cuts, and next-step plans go in
-  `product-docs/outcomes/`, not just chat.
-- Design considerations, data insights, roadmaps, and stakeholder communications have their own
-  first-class folders under `product-docs/`.
-- Skill changes keep the whole operating layer synchronized: `product-skills/START_HERE.md`,
-  `product-skills/INDEX.md`, the matching sub-agent, `agents/sub-agents/INDEX.md`, and Chief PM routing.
-- Reusable output formats live in `product-practices/templates/`; PM-provided examples and style/context
-  samples live in `product-practices/references/`. Individual skills should link there instead of carrying every
-  possible template inline.
-- Never overwrite raw input - keep it under an artifact-local `raw/` archive folder; summaries and
-  artifacts are always new files in the main artifact folder.
+## Conventions To Preserve
+
+- One front door: the user talks to the Chief PM; it delegates.
+- Keep the human surface small: `START_HERE.md`, `product-docs/`, and optionally
+  `product-practices/`.
+- Mark agent-facing files clearly near the top; keep content indexes human-readable.
+- Keep the root `INDEX.md` as a concise workboard plus navigation. Use local indexes for meaningful
+  content domains, substantial subdomains, and multi-file artifacts—not automatically for every tiny
+  leaf folder.
+- Whenever an agent reads `AGENTS.md`, perform lightweight structural reconciliation: preserve and
+  integrate unindexed user-created folders, subfolders, and files; add missing maps and clear
+  routing; ask only when meaning or placement is genuinely ambiguous.
+- Fit the product stage and PM scope. Do not scaffold every possible PM lane.
+- Put synthesis, recommendations, prioritization, MVP cuts, and next steps in
+  `product-docs/outcomes/` (or the project's `outcomes/` folder when they concern one project), not
+  only chat.
+- File by scope. Work that belongs to one initiative lives inside its project; product-wide work
+  stays in the global folders; every decision also gets a row in the global decisions log.
+- Record each project's stage and health in its `status.md` and mirror them in the portfolio table.
+  Stage is a fact, not a gate. The Chief leads with Think (discover, define) or Build (build, launch,
+  learn) from that stage.
+- Ask how the PM works during personalization and set the PM profile in `AGENTS.md` to `pm` or
+  `pm-builder`. Application code never lives in the workspace; link the repository from `brief.md`.
+- Keep reusable instructions, formats, and examples together under `product-practices/` as
+  `skills/`, `templates/`, and `references/`.
+- Determine whether guidance is task-local or a durable operating preference from its meaning and
+  scope, not trigger phrases. When a request contains both work to produce and a reusable
+  convention, complete the work and update the relevant existing skill/template/reference in the
+  same task.
+- Keep the default library minimal. Add or update a skill for a durable preference or recurring
+  workflow; add a specialist only when a distinct recurring role is useful. Synchronize them with
+  content areas and Chief PM routing.
+- Never overwrite raw input. Preserve it under an artifact-local `raw/` folder and create clean
+  summaries and artifacts separately.
+- Route specialized work through compatible installed skills or tools when useful, while keeping PM
+  OS as the organizer. Default narrative work to Markdown; create heavier or binary formats only on
+  explicit request or clear contextual need. Store generated deliverables with their source/context
+  in the appropriate product area and update the nearest index.
 
 ## Notes
 
-- This skill only **scaffolds and optionally personalizes** a workspace. It does not build
-  application code.
-- The `agents/`, `_workspace_setup_docs/`, `product-skills/`, and `product-practices/` files are
-  plain Markdown instructions; the user talks naturally and the generated `START_HERE.md` explains
-  the simple workflow.
-- **The Chief PM is the workspace's default persona, not a selectable app.** In Claude Code, Cursor,
-  and Codex the user just talks and `AGENTS.md` makes the chat the Chief; only GitHub Copilot has an
-  agent picker. Sub-agents are personas that point to skills.
-- **Tool wiring is minimal by default.** The canonical `agents/`, `_workspace_setup_docs/`,
-  `product-skills/`, and `product-practices/` files are tool-agnostic;
-  `CLAUDE.md` is pre-shipped only as a pointer to `AGENTS.md`, and `.cursor/rules/pm-os.mdc` is
-  pre-shipped as an always-on Cursor bridge. During personalization, only generate `.claude/agents/`
-  specialists or flat `.github/agents/*.agent.md` files if the PM explicitly asks to wire that tool.
-  Do not generate a legacy `.agents/` folder.
+- This skill scaffolds and optionally personalizes a PM workspace. It does not build application
+  code. The Builder specialist prepares briefs and prompts and checks results for coding agents;
+  the code itself lives in the PM's repository.
+- The Chief PM is the default workspace persona. In most tools, the PM simply talks in the workspace.
+- Tool wiring stays minimal. `CLAUDE.md` points to `AGENTS.md`, and Cursor gets one always-on rule.
+  Generate `.claude/agents/` or `.github/agents/*.agent.md` only when the PM asks.
+- `_workspace_setup_docs/workspace-state.json` records the setup version and workspace schema. Treat
+  plugin/skill updates and workspace migrations as separate operations.

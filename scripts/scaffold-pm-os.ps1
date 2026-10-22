@@ -122,7 +122,7 @@ function Assert-NoExistingPmOs {
         return
     }
 
-    $pmOsMarkers = @("AGENTS.md", "INDEX.md", "agents", "_workspace_setup_docs", "product-skills", "product-docs")
+    $pmOsMarkers = @("AGENTS.md", "INDEX.md", "agents", "_workspace_setup_docs", "product-practices", "product-skills", "product-docs")
     foreach ($marker in $pmOsMarkers) {
         if (Test-Path -LiteralPath (Join-Path $WorkspaceRoot $marker)) {
             throw "The target already looks like a PM OS workspace: $WorkspaceRoot"
@@ -160,6 +160,7 @@ function Copy-TemplateContents {
                 $content = $content.Replace("{{PROJECT_NAME}}", $Name)
             }
             $content = $content.Replace("{{DATE}}", (Get-Date -Format "MMM-dd-yyyy"))
+            $content = $content.Replace("{{ISO_DATE}}", (Get-Date -Format "yyyy-MM-dd"))
             Set-Content -LiteralPath $destination -Value $content -NoNewline
         }
     }

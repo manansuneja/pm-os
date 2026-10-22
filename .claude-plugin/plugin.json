@@ -1,9 +1,9 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
-  "name": "pm-os-setup",
-  "displayName": "PM OS Setup",
-  "version": "1.0.0",
-  "description": "Create a Product Management operating system workspace with a Chief PM coordinator, reusable skills, product memory, and automatic structure maintenance.",
+  "name": "pm-os",
+  "displayName": "PM OS",
+  "version": "1.4.0",
+  "description": "Build a PM workspace that gives your agent lasting context about your product.",
   "author": {
     "name": "Manan Suneja",
     "url": "https://github.com/manansuneja"

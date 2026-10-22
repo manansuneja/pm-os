@@ -1,4 +1,9 @@
-﻿# meetings/ - Index
+﻿# meetings/ — Index
+
+> **Your product content:** Meeting memory for the PM and agents.
+
+Product-wide and cross-project meetings live here. A meeting about one project lives in that
+project's `meetings/` folder instead; see [projects](../projects/INDEX.md).
 
 One folder per meeting, named `<MMM-DD-YYYY>-<short-title>`. Each holds `summary.md` as the main
 context surface and a `raw/` archive for untouched source notes.
